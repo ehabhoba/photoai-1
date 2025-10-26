@@ -21,6 +21,7 @@ interface PolaroidCardProps {
     filterCss?: string;
     isUploadCard?: boolean;
     placeholderCaption?: string;
+    loading?: 'lazy' | 'eager';
 }
 
 const LoadingSpinner = () => (
@@ -58,7 +59,7 @@ const Placeholder: React.FC<{ caption?: string }> = ({ caption }) => (
 );
 
 
-const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, error, dragConstraintsRef, onShake, onDownload, isMobile, filterCss, isUploadCard = false, placeholderCaption }) => {
+const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, error, dragConstraintsRef, onShake, onDownload, isMobile, filterCss, isUploadCard = false, placeholderCaption, loading = 'lazy' }) => {
     const [isDeveloped, setIsDeveloped] = useState(isUploadCard);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
     const lastShakeTime = useRef(0);
@@ -169,6 +170,7 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
                             key={imageUrl}
                             src={imageUrl}
                             alt={caption}
+                            loading={loading}
                             onLoad={() => setIsImageLoaded(true)}
                             className={cn(
                                 "w-full h-full object-cover",

@@ -39,7 +39,6 @@ const translationData = {
         subtitle: 'شاهد نفسك عبر العقود.',
         uploadInstructions: 'انقر على الصورة لتحميل صورتك وبدء رحلتك عبر الزمن.',
         freeMessage: 'مجاني تمامًا. لا يتطلب تسجيل. بدون فترة تجريبية.',
-        templatesTitle: 'أو اختر شخصية جاهزة',
         filterTitle: 'اختر فلترًا',
         generatePrompt: (decade: string) => {
             const prompts = decadePrompts[decade as keyof typeof decadePrompts];
@@ -95,7 +94,6 @@ const translationData = {
         subtitle: 'See yourself through the decades.',
         uploadInstructions: 'Click the polaroid to upload your photo and begin your time travel.',
         freeMessage: 'Completely free. No registration required. No trial period.',
-        templatesTitle: 'Or choose a ready character',
         filterTitle: 'Choose a Filter',
         generatePrompt: (decade: string) => {
             const prompts = decadePrompts[decade as keyof typeof decadePrompts];
@@ -167,21 +165,5 @@ const promptsData = {
     ]
 };
 
-const templatesData = {
-    ar: [
-        { name: 'رجل 1', url: 'https://i.ibb.co/6nB1f8d/pexels-photo-220455.jpg' },
-        { name: 'امرأة 1', url: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-        { name: 'رجل 2', url: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-        { name: 'امرأة 2', url: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-    ],
-    en: [
-        { name: 'Man 1', url: 'https://i.ibb.co/6nB1f8d/pexels-photo-220455.jpg' },
-        { name: 'Woman 1', url: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-        { name: 'Man 2', url: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-        { name: 'Woman 2', url: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-    ]
-};
-
 export const translations = translationData;
 export const getPrompts = (lang: Language) => promptsData[lang];
-export const getTemplates = (lang: Language) => templatesData[lang];

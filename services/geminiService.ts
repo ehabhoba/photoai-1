@@ -5,14 +5,19 @@
 import { GoogleGenAI } from "@google/genai";
 import type { GenerateContentResponse } from "@google/genai";
 
-const API_KEY = process.env.API_KEY;
+let ai: GoogleGenAI | null = null;
 
-if (!API_KEY) {
-  throw new Error("API_KEY environment variable is not set");
+function getAiClient(): GoogleGenAI {
+  if (ai) {
+    return ai;
+  }
+  const API_KEY = process.env.API_KEY;
+  if (!API_KEY) {
+    throw new Error("API_KEY environment variable is not set.");
+  }
+  ai = new GoogleGenAI({ apiKey: API_KEY });
+  return ai;
 }
-
-const ai = new GoogleGenAI({ apiKey: API_KEY });
-
 
 // --- Helper Functions ---
 
@@ -62,10 +67,11 @@ function processGeminiResponse(response: GenerateContentResponse): string {
 async function callGeminiWithRetry(imagePart: object, textPart: object): Promise<GenerateContentResponse> {
     const maxRetries = 3;
     const initialDelay = 1000;
+    const aiClient = getAiClient();
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-            return await ai.models.generateContent({
+            return await aiClient.models.generateContent({
                 model: 'gemini-2.5-flash-image',
                 contents: { parts: [imagePart, textPart] },
             });

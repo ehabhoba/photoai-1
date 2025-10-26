@@ -9,7 +9,7 @@ import PolaroidCard from './components/PolaroidCard';
 import { createAlbumPage, applyWatermark } from './lib/albumUtils';
 import Footer from './components/Footer';
 import { cn } from './lib/utils';
-import { translations, getPrompts, getTemplates } from './lib/i18n';
+import { translations, getPrompts } from './lib/i18n';
 
 type Language = 'ar' | 'en';
 
@@ -164,7 +164,6 @@ function App() {
     const dragAreaRef = useRef<HTMLDivElement>(null);
     const isMobile = useMediaQuery('(max-width: 768px)');
     const t = translations[language];
-    const templates = getTemplates(language);
 
     useEffect(() => {
         const browserLang = navigator.language.split('-')[0];
@@ -193,13 +192,6 @@ function App() {
             };
             reader.readAsDataURL(file);
         }
-    };
-
-    const handleTemplateSelect = (url: string) => {
-        setUploadedImage(url);
-        setAppState('image-uploaded');
-        setGeneratedImages({});
-        setSelectedFilter('none');
     };
 
     const applyFilterToImage = (imageDataUrl: string, filterCss: string): Promise<string> => {
@@ -419,24 +411,6 @@ function App() {
                             <input id="file-upload" type="file" className="hidden" accept="image/png, image/jpeg, image/webp" onChange={handleImageUpload} />
                             <p className="mt-8 font-permanent-marker text-neutral-500 text-center max-w-xs text-lg">{t.uploadInstructions}</p>
                             <p className="mt-4 text-neutral-400 text-center max-w-xs text-sm">{t.freeMessage}</p>
-
-                            <div className="mt-12 text-center w-full max-w-md">
-                                <h2 className="font-permanent-marker text-neutral-300 text-xl tracking-wide">{t.templatesTitle}</h2>
-                                <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 px-4">
-                                    {templates.map((template) => (
-                                        <div key={template.name} className="cursor-pointer group flex flex-col items-center" onClick={() => handleTemplateSelect(template.url)}>
-                                            <img 
-                                                src={template.url} 
-                                                alt={template.name} 
-                                                className="w-24 h-24 object-cover rounded-md border-2 border-neutral-700 group-hover:border-yellow-400 transition-all duration-200 transform group-hover:scale-105" 
-                                                loading="lazy"
-                                                decoding="async"
-                                            />
-                                            <p className="text-neutral-400 text-sm mt-2">{template.name}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
                         </motion.div>
                     </div>
                 )}
@@ -449,6 +423,7 @@ function App() {
                             status="done"
                             filterCss={FILTERS.find(f => f.value === selectedFilter)?.css}
                             isUploadCard={true}
+                            loading="eager"
                          />
                         <div className="flex flex-col items-center gap-4 my-2">
                             <h3 className="font-permanent-marker text-neutral-300 text-lg tracking-wide">{t.filterTitle}</h3>

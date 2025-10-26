@@ -14,8 +14,12 @@ interface State {
 }
 
 class ErrorBoundary extends React.Component<Props, State> {
+  // FIX: Replaced the constructor with a state class property for cleaner and more standard state initialization.
+  // This is a more robust pattern for React class components that resolves TypeScript
+  // errors where `this.props` or `this.state` might not be correctly inferred.
   public state: State = {
     hasError: false,
+    error: undefined,
   };
 
   public static getDerivedStateFromError(error: Error): State {
@@ -26,7 +30,7 @@ class ErrorBoundary extends React.Component<Props, State> {
     console.error("Uncaught error:", error, errorInfo);
   }
 
-  public render() {
+  public render(): ReactNode {
     if (this.state.hasError) {
       return (
         <div className="bg-black text-neutral-200 min-h-screen w-full flex flex-col items-center justify-center p-4">
@@ -47,7 +51,6 @@ class ErrorBoundary extends React.Component<Props, State> {
       );
     }
 
-    // Fix: Accessing props from the component instance. The error was likely a type inference issue.
     return this.props.children;
   }
 }
