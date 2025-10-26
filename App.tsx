@@ -425,7 +425,13 @@ function App() {
                                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 px-4">
                                     {templates.map((template) => (
                                         <div key={template.name} className="cursor-pointer group flex flex-col items-center" onClick={() => handleTemplateSelect(template.url)}>
-                                            <img src={template.url} alt={template.name} className="w-24 h-24 object-cover rounded-md border-2 border-neutral-700 group-hover:border-yellow-400 transition-all duration-200 transform group-hover:scale-105" />
+                                            <img 
+                                                src={template.url} 
+                                                alt={template.name} 
+                                                className="w-24 h-24 object-cover rounded-md border-2 border-neutral-700 group-hover:border-yellow-400 transition-all duration-200 transform group-hover:scale-105" 
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
                                             <p className="text-neutral-400 text-sm mt-2">{template.name}</p>
                                         </div>
                                     ))}
