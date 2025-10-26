@@ -8,6 +8,7 @@ import { generateDecadeImage } from './services/geminiService';
 import PolaroidCard from './components/PolaroidCard';
 import { createAlbumPage, applyWatermark } from './lib/albumUtils';
 import Footer from './components/Footer';
+import Logo from './components/Logo';
 import { cn } from './lib/utils';
 import { translations, getPrompts } from './lib/i18n';
 
@@ -101,6 +102,7 @@ const PromptModal: React.FC<PromptModalProps> = ({ onClose, language }) => {
 // --- Main App Component ---
 
 const DECADES = ['1950s', '1960s', '1970s', '1980s', '1990s', '2000s'];
+const EXAMPLE_IMAGE_URL = "data:image/jpeg;base64,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lFLQAlFLS0AJRS0tACUUUtACUtJS0ALRSUtAC0lFLQAlFLS0ALSUUUALSUUUALSUUtAC0lFLQAlFLS0ALRSUtAC0lFLQAlFLS0ALSUUUALSUUtAC0lFFABS0lLQAUtJRQAtLSUUALSUtJQAUtJS0ALSUUtAC0tJS0ALSUUUALSUUUALSUtJQAtJS0lAC0lFFAC0lFFAC0tJS0ALSUUtAC0lFLQAtJSUtAC0tJRQAtJS0lAC0lFFAC0lFLQAUlLS0AJRS0tACUUUUALRSUtACUUtLQAUtJS0ALSUUtAC0tJS0ALSUUtACUtJS0ALRSUtAC0lFFAC0tJS0ALSUUtABS0lFAC0lLSUALSUUUALSUUtAC0tJS0ALRSUtAC0lFFABS0lLQAtJSUtAC0lLSUALSUUUALSUUUALSUtJQAUtJS0ALSUUtAC0lFLQAtJS0lAC0tJS0ALSUUUALRSUtACUtJS0ALRSUtACUtJS0ALRSUtACUtFFAC0tJS0ALSUUtAC0lFLQAtJS0lAC0tJS0ALRSUtACUtJS0ALRSUtAC0tJS0ALRSUtAC0tJS0ALSUUUALSUUtAC0lLSUALSUUtAC0lLSUALSUUtAC0tJS0ALSUUtAC0lFLQAtLSUlAC0tJS0AJRS0tAC0lFLQAtJS0lAC0tJS0AJRS0tAC0lFLQAlFLS0AJRS0tACUUUUALSUtJQAUtJS0AJRS0tAC0lLSUALSUUtACUtJS0ALRSUtAC0lFLQAtJS0lAC0lLSUALRSUtACUtJS0ALSUUUALSUUtAC0lLSUALSUUtAC0lFLQAtLSUlAC0tJRQAtJS0lAC0lLSUALRSUtAC0lLS0AJRS0tACUtJS0ALRSUtAC0tJS0ALSUUUALSUUUALSUtJQAUtJS0ALSUUtAC0lLSUALSUUUALSUUtAC0lLSUALSUUtAC0tJS0ALSUUUALRSUtAC0tJS0ALSUUUALRSUtACUtJS0ALSUUUALSUUtABS0lLQAtJSUtAC0lLS0AJRS0tACUUUUALSUUtAC0lLSUALSUUtAC0lLSUALSUUtAC0lLSUALSUUUALSUUtAC0tJS0ALSUUUALRSUtAC0lLSUALSUUtAC0tJRQAtJS0lAC0lLSUALSUUUALSUUtAC0lLSUALSUUtAC0lLSUALRSUtAC0tJS0ALRSUtAC0lLS0AJRS0tACUtJS0ALRSUtAC0lFLQAUlLS0ALSUUUALSUUUALSUUtAC0lFLQAUlLS0ALRSUtACUtJS0ALSUUtAC0lLSUALSUUtAC0lFLQAtJS0lAC0lLS0ALRSUtAC0lFLQAtLSUlAC0lLS0ALRSUtAC0lLSUALRSUtAC0tJRQAtJS0lAC0lLSUALSUUUALSUUtAC0lLSUALSUUtAC0lLS0AJRS0tACUtJS0ALRSUtAC0lLS0ALRSUtAC0tJS0ALRSUtAC0lLS0AJRS0tAC0lFLQAUlLS0AJRS0tAC0lFLQAUlLSUALRSUtACUtJS0ALRSUtAC0lLS0ALRSUtACUtJS0ALRSUtAC0lFLQAlLSUtACUtJS0ALRSUtAC0lLSUALSUUUALSUUtAC0lFLQAlLSUtACUtJS0ALRSUtAC0tJS0ALRSUtAC0lLS0ALSUUUALSUtJQAtFLS0AJRS0tACUUUtAC0lLSUALSUUUALSUtJQAtFLS0AJRS0tACUUUUALSUtJQAtJS0lAC0UUtACUUtLQAUtJRQAtJSUtACUUtLQAUtJRQAtJSUtAC0lFLQAUlLS0ALRSUtACUtJS0ALRSUtAC0lFLQAUlLS0ALRSUtACUtJS0ALRSUtAC0lFLQAUlLSUALRSUtAC0lFLQAlLSUtACUtJS0ALRSUtAC0lLSUALSUUUALSUtJQAtJS0lAC0tJS0AJRS0tAC0lLSUALRSUtAC0lLSUALSUUtAC0lLS0AJRS0tACUtFFABS0lLQAtLSUlAC0UtJQAlLSUtACUtFFABS0lLQAtLSUlAC0UtJQAlLSUtACUtJS0ALRSUtAC0tJQAtLSUlAC0UtJQAlLSUtACUtFFABS0lLQAtLSUlAC0UtJQAlLSUtACUtFFABS0lLQAtLSUlAC0UtJQAlLSUtAC0lLSUALSUUtAC0lLS0AJRS0tAC0lFLQAUlLS0ALSUUUALSUUtABSUtJQAUtJS0AJRS0tAC0lLSUALSUtJQAUtJS0AJRS0tAC0lFLQAUlLS0ALSUUtACUtJS0ALSUtJQAUtJS0AJRS0tAC0lLSUALSUtJQAUtJS0AJRS0tAC0lLSUALSUtJQAUtJS0AJRS0tAC0lFLQAUlLS0ALSUUUALSUUtACUtFFAC0tJS0ALSUUUALSUtJQAtLSUtACUUUUALSUUUALSUtJQAtLSUtACUUUtAC0lFLQAUlLS0ALRSUtAC0tJS0AJRS0tAC0lLSUALSUtJQAUtFFAC0lLS0AJRS0tAC0lFLQAUlLSUALRSUtACUtJS0ALRSUtACUtJS0ALSUUtAC0lLSUALRSUtAC0lLS0AJRS0tAC0lLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLSUALSUtJQAtLS0tACUUUUALSUUtAC0lLS0ALSUUUALSUUtAC0lLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLS0ALRSUtACUtLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLSUALSUtJQAtLS0tACUUUUALSUUtAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALSUUUALSUUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLSUALSUtJQAtLS0tACUUUUALSUUtAC0lLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALSUUUALSUtJQAtFLS0AJRS0tAC0lLSUALSUtJQAUtLS0AJRS0tAC0lLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0ALRSUtACUtLS0AL-sAR-JQAAAgICAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAg-ls/sIR-JQAAAgICAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAgACAg-UtLS0ALRSUtAC";
 
 // Pre-defined positions for a scattered look on desktop
 const POSITIONS = [
@@ -110,15 +112,6 @@ const POSITIONS = [
     { top: '2%', left: '35%', rotate: 10 },
     { top: '40%', left: '70%', rotate: -12 },
     { top: '50%', left: '38%', rotate: -3 },
-];
-
-const GHOST_POLAROIDS_CONFIG = [
-  { initial: { x: "-150%", y: "-100%", rotate: -30 }, transition: { delay: 0.2 } },
-  { initial: { x: "150%", y: "-80%", rotate: 25 }, transition: { delay: 0.4 } },
-  { initial: { x: "-120%", y: "120%", rotate: 45 }, transition: { delay: 0.6 } },
-  { initial: { x: "180%", y: "90%", rotate: -20 }, transition: { delay: 0.8 } },
-  { initial: { x: "0%", y: "-200%", rotate: 0 }, transition: { delay: 0.5 } },
-  { initial: { x: "100%", y: "150%", rotate: 10 }, transition: { delay: 0.3 } },
 ];
 
 const FILTERS = [
@@ -376,42 +369,79 @@ function App() {
     };
 
     return (
-        <main className="bg-black text-neutral-200 min-h-screen w-full flex flex-col items-center justify-center p-4 pb-24 overflow-hidden relative animated-grid">
+        <main className="bg-black text-neutral-200 min-h-screen w-full flex flex-col items-center justify-center p-4 pb-24 overflow-x-hidden relative animated-grid">
             
             <div className="z-10 flex flex-col items-center justify-center w-full h-full flex-1 min-h-0">
-                <div className="text-center mb-10">
-                    <h1 className="text-6xl md:text-8xl font-caveat font-bold text-neutral-100">{t.title}</h1>
+                <header className="text-center my-10 flex flex-col items-center">
+                    <Logo language={language} className="w-64 h-auto cursor-pointer" onClick={() => appState !== 'idle' && handleReset()} />
                     <p className="font-permanent-marker text-neutral-300 mt-2 text-xl tracking-wide">{t.subtitle}</p>
-                </div>
+                </header>
 
                 {appState === 'idle' && (
-                     <div className="relative flex flex-col items-center justify-center w-full">
-                        {GHOST_POLAROIDS_CONFIG.map((config, index) => (
-                             <motion.div
-                                key={index}
-                                className="absolute w-80 h-[26rem] rounded-md p-4 bg-neutral-100/10 blur-sm"
-                                initial={config.initial}
-                                animate={{ x: "0%", y: "0%", rotate: (Math.random() - 0.5) * 20, scale: 0, opacity: 0 }}
-                                transition={{ ...config.transition, ease: "circOut", duration: 2 }}
-                            />
-                        ))}
-                        <motion.div
-                             initial={{ opacity: 0, y: 100, rotate: 15 }}
-                             animate={{ opacity: 1, y: 0, rotate: 0 }}
-                             transition={{ delay: 2, duration: 0.8, type: 'spring', stiffness: 100, damping: 15 }}
-                             className="flex flex-col items-center"
-                        >
-                            <label htmlFor="file-upload" className="cursor-pointer group transform hover:scale-105 transition-transform duration-300">
-                                 <PolaroidCard 
-                                     caption={t.polaroid.clickToStart}
-                                     status="done"
-                                     placeholderCaption={t.polaroid.uploadPlaceholder}
-                                 />
-                            </label>
-                            <input id="file-upload" type="file" className="hidden" accept="image/png, image/jpeg, image/webp" onChange={handleImageUpload} />
-                            <p className="mt-8 font-permanent-marker text-neutral-500 text-center max-w-xs text-lg">{t.uploadInstructions}</p>
-                            <p className="mt-4 text-neutral-400 text-center max-w-xs text-sm">{t.freeMessage}</p>
-                        </motion.div>
+                     <div className="w-full max-w-5xl mx-auto">
+                        {/* Hero Section */}
+                        <div className="relative flex flex-col items-center justify-center w-full mb-16">
+                            <motion.div
+                                 initial={{ opacity: 0, y: 100, rotate: 15 }}
+                                 animate={{ opacity: 1, y: 0, rotate: 0 }}
+                                 transition={{ delay: 0.5, duration: 0.8, type: 'spring', stiffness: 100, damping: 15 }}
+                                 className="flex flex-col items-center"
+                            >
+                                <label htmlFor="file-upload" className="cursor-pointer group transform hover:scale-105 transition-transform duration-300">
+                                     <PolaroidCard 
+                                         caption={t.polaroid.clickToStart}
+                                         status="done"
+                                         placeholderCaption={t.polaroid.uploadPlaceholder}
+                                     />
+                                </label>
+                                <input id="file-upload" type="file" className="hidden" accept="image/png, image/jpeg, image/webp" onChange={handleImageUpload} />
+                                <p className="mt-8 font-permanent-marker text-neutral-400 text-center max-w-xs text-lg">{t.uploadInstructions}</p>
+                                <p className="mt-4 text-neutral-500 text-center max-w-xs text-sm">{t.freeMessage}</p>
+                            </motion.div>
+                        </div>
+              
+                        {/* How It Works Section */}
+                        <div className="mb-16">
+                            <h2 className="text-4xl font-caveat text-center text-yellow-400 mb-8">{t.howItWorks.title}</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                                {/* Step 1 */}
+                                <div className="text-center flex flex-col items-center">
+                                    <div className="bg-yellow-400/20 p-4 rounded-full mb-4 border-2 border-yellow-400/50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                    </div>
+                                    <h3 className="font-permanent-marker text-xl text-neutral-100">{t.howItWorks.step1}</h3>
+                                    <p className="text-neutral-400 mt-2">{t.howItWorks.step1desc}</p>
+                                </div>
+                                {/* Step 2 */}
+                                <div className="text-center flex flex-col items-center">
+                                    <div className="bg-yellow-400/20 p-4 rounded-full mb-4 border-2 border-yellow-400/50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                    </div>
+                                    <h3 className="font-permanent-marker text-xl text-neutral-100">{t.howItWorks.step2}</h3>
+                                    <p className="text-neutral-400 mt-2">{t.howItWorks.step2desc}</p>
+                                </div>
+                                {/* Step 3 */}
+                                <div className="text-center flex flex-col items-center">
+                                   <div className="bg-yellow-400/20 p-4 rounded-full mb-4 border-2 border-yellow-400/50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.368a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg>
+                                    </div>
+                                    <h3 className="font-permanent-marker text-xl text-neutral-100">{t.howItWorks.step3}</h3>
+                                    <p className="text-neutral-400 mt-2">{t.howItWorks.step3desc}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Example Section */}
+                        <div className="mb-16">
+                            <h2 className="text-4xl font-caveat text-center text-yellow-400 mb-2">{t.exampleSection.title}</h2>
+                            <p className="text-center text-neutral-400 mb-8 max-w-2xl mx-auto">{t.exampleSection.description}</p>
+                            <div className="flex items-center justify-center gap-4 md:gap-8 flex-wrap">
+                                 <PolaroidCard imageUrl={EXAMPLE_IMAGE_URL} caption={t.exampleSection.before} status="done" loading="eager" isUploadCard={true} />
+                                 <PolaroidCard imageUrl={EXAMPLE_IMAGE_URL} caption={t.exampleSection.after1950} status="done" filterCss="sepia(0.6) contrast(1.1) brightness(0.9)" loading="lazy" isUploadCard={true}/>
+                                 <PolaroidCard imageUrl={EXAMPLE_IMAGE_URL} caption={t.exampleSection.after1970} status="done" filterCss="sepia(0.8) contrast(0.9) brightness(0.8) hue-rotate(-20deg)" loading="lazy" isUploadCard={true} />
+                                 <PolaroidCard imageUrl={EXAMPLE_IMAGE_URL} caption={t.exampleSection.after1990} status="done" filterCss="grayscale(0.5) contrast(1.2) brightness(1.1)" loading="lazy" isUploadCard={true} />
+                            </div>
+                        </div>
                     </div>
                 )}
 

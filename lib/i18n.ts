@@ -88,6 +88,23 @@ const translationData = {
             header: 'تم إنشاؤه بواسطة رحلة عبر الزمن',
             subheader: 'على Google AI Studio',
         },
+        howItWorks: {
+            title: 'كيف يعمل؟',
+            step1: 'ارفع صورتك',
+            step1desc: 'اختر صورة واضحة لنفسك أو لأي شخص آخر.',
+            step2: 'اختر الفلتر',
+            step2desc: 'اختر فلترًا كلاسيكيًا لإضفاء لمسة فنية.',
+            step3: 'أنشئ وشارك',
+            step3desc: 'شاهد السحر وشارك نتائجك مع العالم.',
+        },
+        exampleSection: {
+            title: 'شاهد السحر',
+            description: 'انظر كيف يمكن لـ Past Forward أن يعيد تصور صورتك عبر العقود المختلفة.',
+            before: 'الأصل',
+            after1950: 'الخمسينات',
+            after1970: 'السبعينات',
+            after1990: 'التسعينات',
+        },
     },
     en: {
         title: 'Past Forward',
@@ -142,6 +159,23 @@ const translationData = {
         album: {
             header: 'Created with Past Forward',
             subheader: 'on Google AI Studio',
+        },
+        howItWorks: {
+            title: 'How It Works?',
+            step1: 'Upload a Photo',
+            step1desc: 'Choose a clear photo of yourself or someone else.',
+            step2: 'Select a Filter',
+            step2desc: 'Optionally pick a classic filter for an artistic touch.',
+            step3: 'Generate & Share',
+            step3desc: 'Witness the magic and share your results with the world.',
+        },
+        exampleSection: {
+            title: 'See The Magic',
+            description: 'See how Past Forward can reimagine your photo through different decades.',
+            before: 'Original',
+            after1950: '1950s Look',
+            after1970: '1970s Vibe',
+            after1990: '1990s Style',
         },
     }
 };
